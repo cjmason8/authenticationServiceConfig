@@ -1,0 +1,12 @@
+authService:
+  extends:
+    file: ../docker-compose.yml
+    service: authService
+  environment:
+    DB_URL: jdbc:postgresql://172.17.0.1:5432/authservice
+    DB_USER: postgres
+    DB_PASS: CEZsmAWTbh0CnoagCJ/hRw==
+    DB_DRIVER: org.postgresql.Driver
+    HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+    HIBERNATE_HBM2DDL_AUTO: update
+    ALPHA_VEC: E66YYu84iW50GE66

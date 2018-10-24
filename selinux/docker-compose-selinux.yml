@@ -1,0 +1,7 @@
+authService:
+  extends:
+    file: ../lcl/docker-compose-lcl.yml
+    service: authService
+  volumes:
+    - /applogs:/applogs:z
+    - /resources:/resources:z
