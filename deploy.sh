@@ -6,7 +6,7 @@ RANCHER_URL=http://localhost:8080/v2-beta/projects/1a5
 ENV_NAME=lcl
 PROJECT_NAME=auth-service
 BASE_DIR=${PWD}
-TAG_NAME=0.0.1
+TAG_NAME=0.1.35
 
 echo -e "TAG_NAME=$TAG_NAME" > env.txt
 
