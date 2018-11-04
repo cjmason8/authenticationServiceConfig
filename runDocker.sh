@@ -5,6 +5,10 @@ set -e
 ENV=$1
 FULL_IMAGE_NAME="auth-service"
 
+if [ -z $ENV ]; then
+  ENV=lcl
+fi
+
 echo "Building version."
 TAG_NAME=0.0.1
 echo -e "TAG_NAME=$TAG_NAME" > .env

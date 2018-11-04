@@ -1,4 +1,4 @@
-FROM openjdk:8u171-jdk-alpine3.8
+FROM adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.28
 
 RUN adduser -D -u 1000 localUser
 

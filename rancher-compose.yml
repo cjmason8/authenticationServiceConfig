@@ -1,0 +1,4 @@
+version: '2'
+services:
+  authService:
+    scale: 1
