@@ -53,6 +53,9 @@ if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]
   cd ../authenticationService
   mvn clean install
   cd ../authenticationServiceConfig
+  mkdir -p target
+  cp ../authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
+  
   docker build --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
 fi
 
