@@ -2,37 +2,35 @@
 
 set -e
 
-FULL_IMAGE_NAME="auth-service"
+ENV=$1
 
-while getopts ":p:d:" opt; do
-  case $opt in
-    # Provide commands to run
-    p)
-      PASSWORD="${OPTARG}"
-    ;;
-    d)
-      GIT_PASS="${OPTARG}"
-    ;;    
-    \?)
-      echo "Invalid option -$OPTARG" >&2
-    ;;
-  esac
-done
+if [ -z $ENV ]; then
+  ENV=lcl
+fi
+
+FULL_IMAGE_NAME="auth-service"
 
 git checkout master
 git pull origin master
 
-echo "Building version."
-TAG_NAME=$(<VERSION)
-TAG_NAME="${TAG_NAME%.*}.$((${TAG_NAME##*.}+1))"
-echo $TAG_NAME > VERSION
+if [ $ENV != "lcl" ]; then
+  echo "Building version."
+  TAG_NAME=$(<VERSION)
+  TAG_NAME="${TAG_NAME%.*}.$((${TAG_NAME##*.}+1))"
+  echo $TAG_NAME > VERSION
 
-echo "commiting bump version"
-git config user.name "Release Manager"
-git config user.email "Release.Manager@jenkins.com.au"
-git add --all
-git commit -m "bump version"
-git push
+  echo "commiting bump version"
+  git config user.name "Release Manager"
+  git config user.email "Release.Manager@jenkins.com.au"
+  git add --all
+  git commit -m "bump version"
+  git push
+else
+  echo "Building version."
+  TAG_NAME=$(<LOCAL)
+  TAG_NAME="${TAG_NAME%.*}.$((${TAG_NAME##*.}+1))"
+  echo $TAG_NAME > LOCAL
+fi
 
 echo "Beginning cleanup step."
 echo "Removing docker images for: ${FULL_IMAGE_NAME}"
@@ -56,7 +54,11 @@ if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]
   mkdir -p target
   cp ../authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
   
-  docker build --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
+  if [ $ENV == "lcl" ]; then
+    docker build -f Dockerfile_lcl --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
+  else
+    docker build --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
+  fi
 fi
 
 echo "Beginning publish step."
