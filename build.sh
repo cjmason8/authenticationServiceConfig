@@ -50,7 +50,7 @@ fi
 if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]; then
 
   echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
-  ./mvnw clean install
+  mvn clean install
   docker build --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
 fi
 
