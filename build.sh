@@ -3,6 +3,7 @@
 set -e
 
 ENV=$1
+GIT_PASS=$2
 
 if [ -z $ENV ]; then
   ENV=lcl
