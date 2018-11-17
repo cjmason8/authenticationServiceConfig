@@ -50,7 +50,7 @@ if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]
 
   echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
   cd authenticationService
-  git pull
+  git pull https://cjmason8:${GIT_PASS}@github.com/cjmason8/authenticationServiceConfig.git
   mvn clean install
   cd ..
   mkdir -p target
