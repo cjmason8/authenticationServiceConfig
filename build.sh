@@ -25,7 +25,7 @@ if [ $ENV != "lcl" ]; then
   git config user.email "Release.Manager@jenkins.com.au"
   git add --all
   git commit -m "bump version"
-  git push https://cjmason8:${GIT_PASS}@github.com/cjmason8/authenticationService.git
+  git push https://cjmason8:${GIT_PASS}@github.com/cjmason8/authenticationServiceConfig.git
 else
   echo "Building version."
   TAG_NAME=$(<LOCAL)
