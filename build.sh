@@ -49,11 +49,12 @@ fi
 if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]; then
 
   echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
-  cd ../authenticationService
+  cd authenticationService
+  git pull
   mvn clean install
-  cd ../authenticationServiceConfig
+  cd ..
   mkdir -p target
-  cp ../authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
+  cp authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
   
   if [ $ENV == "lcl" ]; then
     docker build -f Dockerfile_lcl --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
