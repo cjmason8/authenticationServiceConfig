@@ -6,10 +6,9 @@ RANCHER_URL=$3
 ENV_NAME=$4
 PROJECT_NAME=auth-service
 BASE_DIR=${PWD}
+TAG_NAME=$(<VERSION)
 
-if [ $ENV != "lcl" ]; then
-  TAG_NAME=$(<VERSION)
-else
+if [ $ENV_NAME == "lcl" ]; then
   TAG_NAME=$(<LOCAL)
 fi
 
