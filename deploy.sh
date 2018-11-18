@@ -6,7 +6,12 @@ RANCHER_URL=$3
 ENV_NAME=$4
 PROJECT_NAME=auth-service
 BASE_DIR=${PWD}
-TAG_NAME=$5
+
+if [ $ENV != "lcl" ]; then
+  TAG_NAME=$(<VERSION)
+else
+  TAG_NAME=$(<LOCAL)
+fi
 
 echo -e "TAG_NAME=$TAG_NAME" > env.txt
 
