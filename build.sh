@@ -51,7 +51,7 @@ if [[ "$(docker images -q ${FULL_IMAGE_NAME}:${TAG_NAME} 2> /dev/null)" == "" ]]
   echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
   cd authenticationService
   echo "git pull"
-  git pull https://cjmason8:${GIT_PASS}@github.com/cjmason8/authenticationServiceConfig.git
+  git pull https://cjmason8:${GIT_PASS}@github.com/cjmason8/authenticationService.git
   echo "maven"
   docker run -v ~/.m2:/var/maven/.m2 -v "$(pwd)":/opt/maven -w /opt/maven --rm -u 110 -e MAVEN_CONFIG=/var/maven/.m2 maven:3.6-jdk-11 mvn -Duser.home=/var/maven clean install
   cd ..
