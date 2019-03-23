@@ -2,30 +2,31 @@
 
 RANCHER_ACCESS_KEY=$1
 RANCHER_SECRET_KEY=$2
-RANCHER_URL=$3
-ENV_NAME=$4
-PROJECT_NAME=auth-service
-BASE_DIR=${PWD}
+RANCHER_URL=http://80.241.221.122:8080/v2-beta/projects/1a5
+ENV_NAME=prd
+COMPOSE_PROJECT_NAME=expenseManager
+COMPOSE_FILE=${PWD}/${ENV_NAME}/docker-compose-${ENV_NAME}.yml
 TAG_NAME=$(<VERSION)
 
-if [ $ENV_NAME == "lcl" ]; then
-  TAG_NAME=$(<LOCAL)
-fi
+export TAG_NAME
+export RANCHER_URL
+export RANCHER_ACCESS_KEY
+export RANCHER_SECRET_KEY
+export COMPOSE_PROJECT_NAME
+export COMPOSE_FILE
 
 echo "VER=$TAG_NAME"
 
-echo -e "TAG_NAME=$TAG_NAME" > env.txt
-
 echo "Force pulling..."
-rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} -e env.txt -p authService -f ${BASE_DIR}/${ENV_NAME}/docker-compose-${ENV_NAME}.yml pull
+rancher-compose pull
 
 echo "Starting deployment..."
-rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} -r ${BASE_DIR}/rancher-compose.yml -e env.txt -p authService -f ${BASE_DIR}/${ENV_NAME}/docker-compose-${ENV_NAME}.yml up --upgrade -d --pull --batch-size 1
+rancher-compose up --upgrade -d --pull --batch-size 1
 
 if [ $? -eq 0 ]; then
   echo "Deploy success! Confirming..."
-  rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} -e env.txt -p authService -f ${BASE_DIR}/${ENV_NAME}/docker-compose-${ENV_NAME}.yml up --confirm-upgrade -d --batch-size 1
+  rancher-compose up --confirm-upgrade -d --batch-size 1
 else
   echo "Deploy failed :( rolling back..."
-  rancher-compose --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} -e env.txt -p authService -f ${BASE_DIR}/${ENV_NAME}/docker-compose-${ENV_NAME}.yml up --rollback -d --batch-size 1
+  rancher-compose up --rollback -d --batch-size 1
 fi
