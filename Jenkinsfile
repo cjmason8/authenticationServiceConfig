@@ -2,20 +2,20 @@
 
 def project = "authService"
 def version = -1
-def imageName = "auth-serive"
+def imageName = "auth-service"
 
 node {
     stage('Checkout') {
         def file = new File("checkout.sh")
         if (!file.exists()) {
             git(
-                url: 'https://github.com/cjmason8/authServiceConfig.git',
+                url: 'https://github.com/cjmason8/authenticationServiceConfig.git',
                 credentialsId: 'Github',
                 branch: "master"
             )
             dir('authService') {
                 git(
-                    url: 'https://github.com/cjmason8/authService.git',
+                    url: 'https://github.com/cjmason8/authenticationService.git',
                     credentialsId: 'Github',
                     branch: "master"
                 )    
