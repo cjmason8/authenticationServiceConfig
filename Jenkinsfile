@@ -13,7 +13,7 @@ node {
                 credentialsId: 'Github',
                 branch: "master"
             )
-            dir('authService') {
+            dir('authenticationService') {
                 git(
                     url: 'https://github.com/cjmason8/authenticationService.git',
                     credentialsId: 'Github',
@@ -23,13 +23,13 @@ node {
         }
 
         withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            sh './checkout.sh $PASSWORD authService'
+            sh './checkout.sh $PASSWORD authenticationService'
         }
     }
 
     stage('Update Version') {
         withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            sh './updateVersion.sh $PASSWORD authService'
+            sh './updateVersion.sh $PASSWORD authenticationService'
         }
 
         version = readFile('VERSION').trim()
