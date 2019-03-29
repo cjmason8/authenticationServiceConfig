@@ -43,15 +43,9 @@ node {
         sh "./tagAndPush.sh $imageName $version"
     }
 
-    stage('Deploy Test') {
+    stage('Deploy Prod') {
         withCredentials([usernamePassword(credentialsId: 'Rancher', passwordVariable: 'SECRETKEY', usernameVariable: 'ACCESSKEY')]) {
-            sh './deploy.sh $ACCESSKEY $SECRETKEY http://80.241.221.122:8080/v2-beta/projects/1a5 test'
+            sh './deploy.sh $ACCESSKEY $SECRETKEY http://80.241.221.122:8080/v2-beta/projects/1a5 prd'
         }
     }
-
-    //stage('Deploy Prod') {
-    //    withCredentials([usernamePassword(credentialsId: 'Rancher', passwordVariable: 'SECRETKEY', usernameVariable: 'ACCESSKEY')]) {
-    //        sh './deploy.sh $ACCESSKEY $SECRETKEY http://80.241.221.122:8080/v2-beta/projects/1a5 prd'
-    //    }
-    //}
 }
