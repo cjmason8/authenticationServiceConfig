@@ -1,7 +1,7 @@
 #!/bin/bash
 
-FULL_IMAGE_NAME=$1
-TAG_NAME=$2
+FULL_IMAGE_NAME=auth-service
+TAG_NAME=$(<LOCAL)
 
 echo "Beginning cleanup step."
 echo "Removing docker images for: ${FULL_IMAGE_NAME}"
@@ -15,6 +15,9 @@ if [ -z "${TAG_NAME}" ]; then
   echo "No tag name defined, unable to continue."
   exit 1
 fi
+
+TAG_NAME="${TAG_NAME%.*}.$((${TAG_NAME##*.}+1))"
+echo $TAG_NAME > LOCAL
 
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
