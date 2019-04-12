@@ -19,10 +19,7 @@ fi
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 echo "start maven"
-cd authenticationService
-docker run --rm -v "$PWD":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.6.0-jdk-12-alpine mvn clean install
-echo "finished maven"
-cd ..
+docker run --rm -v "/jenkinsHome/workspace/expense-manager-pipeline/authenticationService":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.6.0-jdk-12-alpine mvn clean install
 mkdir -p target
 cp authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
 
