@@ -20,7 +20,7 @@ echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 #echo "maven"
 cd authenticationService
-mvn clean install
+docker run -it --rm -v "$PWD":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.6.0-jdk-12-alpine mvn clean install
 cd ..
 mkdir -p target
 cp authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
