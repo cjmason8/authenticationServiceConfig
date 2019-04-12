@@ -20,7 +20,7 @@ echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 echo "start maven"
 cd authenticationService
-docker run -it --rm -v "$PWD":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.6.0-jdk-12-alpine mvn clean install
+docker run --rm -v "$PWD":/usr/src/mymaven -v "$HOME/.m2":/root/.m2 -w /usr/src/mymaven maven:3.6.0-jdk-12-alpine mvn clean install
 echo "finished maven"
 cd ..
 mkdir -p target
