@@ -15,7 +15,7 @@ echo -e "TAG_NAME=$TAG_NAME" > .env
 
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 cd ../authenticationService
-docker run --rm -v "$PWD":/usr/src/mymaven -u 1000:1000 -v "$HOME/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.6.1-jdk-12 mvn -Duser.home=/var/maven clean install --no-transfer-progress
+docker run --rm -v "$PWD":/usr/src/mymaven -u 1000:1000 -v "$HOME/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.6.2-jdk-13 mvn -Duser.home=/var/maven clean install --no-transfer-progress
 
 cd ../authenticationServiceConfig
 mkdir -p target
