@@ -1,4 +1,4 @@
-FROM cjmason8/alpine-openjdk:jre-13_33-alpine
+FROM cjmason8/alpine-openjdk:jre-14_36-alpine
 
 COPY target/authservice-0.0.1-SNAPSHOT.jar /app/authService.jar
 COPY run.sh /app/run.sh

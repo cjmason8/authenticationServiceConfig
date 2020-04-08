@@ -1,6 +1,7 @@
 authService:
   environment:
      INFO_APP_VERSION: ${TAG_NAME}
+     TZ: Australia/Melbourne
   image: cjmason8/auth-service:${TAG_NAME}
   external_links:
     - postgres/postgres:postgres
