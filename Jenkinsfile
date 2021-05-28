@@ -5,32 +5,19 @@ def version = -1
 def imageName = "auth-service"
 
 node {
-    stage('Checkout') {
-        def file = new File("checkout.sh")
-        if (!file.exists()) {
-            git(
-                url: 'https://github.com/cjmason8/authenticationServiceConfig.git',
-                credentialsId: 'Github',
-                branch: "master"
-            )
-            dir('authenticationService') {
-                git(
-                    url: 'https://github.com/cjmason8/authenticationService.git',
-                    credentialsId: 'Github',
-                    branch: "master"
-                )    
-            }
-        }
+    stage('Delete Workspace') {
+        sh 'rm -rf *'
+        sh 'rm -rf .git'
+        sh 'rm -f .gitignore'
+    }
 
-        withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            sh './checkout.sh $PASSWORD authenticationService'
-        }
+    stage('Checkout') {
+        sh 'git clone git@github.com:cjmason8/authenticationServiceConfig.git .'
+        sh 'git clone git@github.com:cjmason8/authenticationService.git'
     }
 
     stage('Update Version') {
-        withCredentials([usernamePassword(credentialsId: 'Github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            sh './updateVersion.sh $PASSWORD authenticationService'
-        }
+        sh './updateVersion.sh'
 
         version = readFile('VERSION').trim()
     }
