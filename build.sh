@@ -19,7 +19,7 @@ fi
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 echo "start maven"
-docker run --rm -v "/jenkinsHome/workspace/auth-service-pipeline/authenticationService":/usr/src/mymaven -u 0:0 \
+docker run --rm -v "/jenkinsHome/workspace/auth-service-pipeline/authenticationService":/usr/src/mymaven -u 1000:1000 \
     -v "$HOME/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.8.1-openjdk-16 \
     mvn -Duser.home=/var/maven clean install --no-transfer-progress
 mkdir -p target
