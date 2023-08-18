@@ -10,3 +10,5 @@ authService:
     HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     HIBERNATE_HBM2DDL_AUTO: update
     ALPHA_VEC: E66YYu84iW50GE66
+    RESOURCES_DIR: /resources
+    LOG_DIR: /applogs
