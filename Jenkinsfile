@@ -13,7 +13,7 @@ node {
 
     stage('Checkout') {
         sh 'git clone git@github.com:cjmason8/authenticationServiceConfig.git .'
-        sh 'git clone git@github.com:cjmason8/authenticationService.git'
+        sh 'git clone git@github.com:cjmason8/authService.git'
     }
 
     stage('Update Version') {

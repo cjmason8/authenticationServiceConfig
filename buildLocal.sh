@@ -22,11 +22,13 @@ echo $TAG_NAME > LOCAL
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 #echo "maven"
-cd ../authenticationService
-docker run --rm -v "$PWD":/usr/src/mymaven -u 1000:1000 -v "$HOME/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.8.1-openjdk-17 \
-      mvn -Duser.home=/var/maven clean install --no-transfer-progress
+cd ../authservice
+#docker run --rm -v "$PWD":/usr/src/mymaven -u 1000:1000 -v "$HOME/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.8.1-openjdk-17 \
+#      mvn -Duser.home=/var/maven clean install --no-transfer-progress
+
+docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle -Dskip.tests build
 cd ../authenticationServiceConfig
 mkdir -p target
-cp ../authenticationService/target/authservice-0.0.1-SNAPSHOT.jar target
+cp ../authservice/build/libs/authservice-0.0.1-SNAPSHOT.jar target
 
 docker build --no-cache --pull -t ${FULL_IMAGE_NAME}:${TAG_NAME} .
