@@ -19,7 +19,7 @@ fi
 echo "Creating image: ${FULL_IMAGE_NAME}:${TAG_NAME}"
 
 echo "start gradle"
-docker run --rm -u gradle -v "/jenkinsHome/workspace/auth-service-pipeline/authenticationService":/home/gradle/project -w /home/gradle/project gradle gradle -Dskip.tests build
+docker run --rm -u gradle -v "/jenkinsHome/workspace/auth-service-pipeline/authService":/home/gradle/project -w /home/gradle/project gradle gradle -Dskip.tests build
 
 #docker run --rm -v "/jenkinsHome/workspace/auth-service-pipeline/authenticationService":/usr/src/mymaven -u 1000:1000 \
 #    -v "/home/tomcat/.m2":/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -w /usr/src/mymaven maven:3.8.1-openjdk-17 \
