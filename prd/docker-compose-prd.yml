@@ -5,7 +5,7 @@ authService:
   environment:
     DB_URL: jdbc:postgresql://postgres:5432/authservice
     DB_USER: postgres
-    DB_PASS: CEZsmAWTbh0CnoagCJ/hRw==
+    DB_PASS: 29XCSdu61eixtdTi2WIkiQ==
     DB_DRIVER: org.postgresql.Driver
     HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     HIBERNATE_HBM2DDL_AUTO: update
