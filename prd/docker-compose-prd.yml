@@ -3,12 +3,15 @@ authService:
     file: ../docker-compose.yml
     service: authService
   environment:
+    ENV: prd
     DB_URL: jdbc:postgresql://postgres:5432/authservice
-    DB_USER: postgres
-    DB_PASS: 29XCSdu61eixtdTi2WIkiQ==
     DB_DRIVER: org.postgresql.Driver
     HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     HIBERNATE_HBM2DDL_AUTO: update
     ALPHA_VEC: E66YYu84iW50GE66
     RESOURCES_DIR: /resources
     LOG_DIR: /applogs
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    AWS_SECRETS_ENABLED: true
+    AWS_SECRETS_REGION: ap-southeast-2

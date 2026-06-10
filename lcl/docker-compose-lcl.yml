@@ -1,12 +1,21 @@
-authService:
-  extends:
-    file: ../docker-compose.yml
-    service: authService
-  environment:
-    DB_URL: jdbc:postgresql://postgres:5432/authservice
-    DB_USER: postgres
-    DB_PASS: CEZsmAWTbh0CnoagCJ/hRw==
-    DB_DRIVER: org.postgresql.Driver
-    HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-    HIBERNATE_HBM2DDL_AUTO: update
-    ALPHA_VEC: E66YYu84iW50GE66
+version: '2'
+services:
+  authService:
+    extends:
+      file: ../docker-compose-local.yml
+      service: authService
+    environment:
+      ENV: local
+      DB_URL: jdbc:postgresql://host.docker.internal:5430/authservice
+      DB_DRIVER: org.postgresql.Driver
+      HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      HIBERNATE_HBM2DDL_AUTO: update
+      ALPHA_VEC: E66YYu84iW50GE66
+      LOG_DIR: /applogs
+      RESOURCES_DIR: /resources
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SECRETS_ENABLED: true
+      AWS_SECRETS_REGION: ap-southeast-2
+    ports:
+      - 8082:8080

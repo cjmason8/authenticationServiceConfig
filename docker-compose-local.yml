@@ -1,0 +1,13 @@
+version: '2'
+services:
+  authService:
+    environment:
+      INFO_APP_VERSION: ${TAG_NAME}
+      TZ: Australia/Melbourne
+    image: cjmason8/auth-service:${TAG_NAME}
+    external_links:
+      - postgres/postgres:postgres
+    volumes:
+      - /Users/chris/applogs:/applogs
+      - /Users/chris/resources:/resources
+      - /etc/localtime:/etc/localtime
