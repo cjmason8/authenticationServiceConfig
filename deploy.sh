@@ -12,6 +12,14 @@ if [ $ENV_NAME = "lcl" ]; then
   TAG_NAME=$(<LOCAL)
 fi
 
+# Load AWS credentials from .env file if it exists
+if [ -f .env ]; then
+  echo "Loading AWS credentials from .env file..."
+  export $(grep -v '^#' .env | xargs)
+else
+  echo "Warning: .env file not found - AWS Secrets Manager may not work"
+fi
+
 export TAG_NAME
 
 echo "VER=$TAG_NAME"
