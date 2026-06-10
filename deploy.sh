@@ -28,7 +28,21 @@ echo "Force pulling..."
 rancher-compose -p ${COMPOSE_PROJECT_NAME} -f ${COMPOSE_FILE} --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} pull
 
 echo "Starting deployment..."
-rancher-compose -p ${COMPOSE_PROJECT_NAME} -f ${COMPOSE_FILE} --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} up --upgrade -d --pull --batch-size 1
+# Retry logic for Rancher state conflicts
+MAX_RETRIES=5
+RETRY_DELAY=10
+for i in $(seq 1 $MAX_RETRIES); do
+  echo "Deployment attempt $i of $MAX_RETRIES..."
+  rancher-compose -p ${COMPOSE_PROJECT_NAME} -f ${COMPOSE_FILE} --url ${RANCHER_URL} --access-key ${RANCHER_ACCESS_KEY} --secret-key ${RANCHER_SECRET_KEY} up --upgrade -d --pull --batch-size 1
+  if [ $? -eq 0 ]; then
+    break
+  else
+    if [ $i -lt $MAX_RETRIES ]; then
+      echo "Deployment failed, waiting ${RETRY_DELAY}s before retry..."
+      sleep $RETRY_DELAY
+    fi
+  fi
+done
 
 if [ $? -eq 0 ]; then
   echo "Deploy success! Confirming..."
